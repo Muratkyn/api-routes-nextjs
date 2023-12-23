@@ -25,7 +25,6 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => console.log(data))
-      .catch(error => console.log('Error'));
   }
   return (
     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
