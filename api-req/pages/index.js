@@ -1,7 +1,8 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 
 
 export default function Home() {
+  const [loadedFeedbacks, setLoadedFeedbacks] = useState([])
   const emailRef = useRef()
   const feedbackRef = useRef()
 
@@ -25,7 +26,17 @@ export default function Home() {
     })
       .then((response) => response.json())
       .then((data) => console.log(data))
+
+    
   }
+  const loadFeedbackHandler = () => {
+    fetch('/api/feedback')
+        .then((response) => response.json())
+        .then((data) => {
+          setLoadedFeedbacks(data.feedback)
+        })
+    }
+
   return (
     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
 
@@ -35,8 +46,14 @@ export default function Home() {
         <input ref={emailRef}></input>
         <label>feedback</label>
         <textarea ref={feedbackRef} title='feedback' rows={10} ></textarea>
-        <button style={{width:"100px", marginTop:'10px'}}>Submit</button>
+        <button  style={{width:"100px", marginTop:'10px'}}>Submit</button>
+        <hr />
+      <button onClick={loadFeedbackHandler} style={{width:"100px", marginTop:'10px'}}>Load Feedback</button>
+      {loadedFeedbacks.map((item) => (
+          <li key={item.id}>{item.feedback}</li>
+      ))}
       </form>
+      
 
     </div>
   )
