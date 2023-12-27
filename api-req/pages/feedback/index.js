@@ -2,9 +2,10 @@ import React from 'react'
 import { buildFeedbackPath, extractFeedback} from '../api/feedback'
 
 const feedbackPage = (props) => {
+    const {loadedFeedbacks} = props
   return (
     <div>
-        {props.loadedFeedbacks.map((item) => (
+        {loadedFeedbacks.map((item) => (
             <li key={item.id}>{item.feedback}</li>
         ))}
     </div>
@@ -12,7 +13,6 @@ const feedbackPage = (props) => {
 }
 
 export async function getStaticProps () {
-    
     const filePath = buildFeedbackPath();
     const data = extractFeedback(filePath);
 
